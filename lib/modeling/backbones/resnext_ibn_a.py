@@ -198,9 +198,9 @@ class ResNeXt(nn.Module):
     def load_param(self, model_path):
         param_dict = torch.load(model_path)
         for i in param_dict['state_dict']:
-            if 'fc' in i[7:]:
+            if 'fc' in i:
                 continue
-            self.state_dict()[i[7:]].copy_(param_dict['state_dict'][i])
+            self.state_dict()[i].copy_(param_dict['state_dict'][i])
 
 
 def resnext50_ibn_a(last_stride, baseWidth, cardinality):

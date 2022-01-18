@@ -4,7 +4,7 @@ DATALOADER:
   SAMPLER: 'softmax_triplet'
 DATASETS:
   COMBINEALL: False
-  ROOT_DIR: '/media/data/ai-city/Track2'
+  ROOT_DIR: ''
   TEST: ('aicity20_split',)
   TRAIN: ('aicity20_split',)
 INPUT:
@@ -60,7 +60,7 @@ SOLVER:
   CYCLE_EPOCH: 30
   EVAL_PERIOD: 1
   FC_LR_FACTOR: 1
-  FP16: True
+  FP16: False
   FREEZE_BASE_EPOCHS: 0
   GAMMA: 0.1
   HARD_EXAMPLE_MINING_METHOD: batch_hard

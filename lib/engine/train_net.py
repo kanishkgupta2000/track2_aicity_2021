@@ -100,7 +100,7 @@ def train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger):
     log_period = cfg.SOLVER.LOG_PERIOD
     data_start = time.time()
     # import ipdb; ipdb.set_trace()
-    for batch in tqdm(train_loader):
+    for batch in tqdm.tqdm(train_loader):
         data_time.update(time.time() - data_start)
         input, target, _, _, _ = batch
         input = input.cuda()

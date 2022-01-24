@@ -12,6 +12,8 @@ import torch
 from torch.backends import cudnn
 
 sys.path.append('.')
+sys.path.append('/content/drive/My Drive/Colab Notebooks')
+
 from lib.config import cfg
 from lib.data import make_data_loader
 from lib.engine.train_net import do_train

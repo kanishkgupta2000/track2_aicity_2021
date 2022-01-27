@@ -83,6 +83,7 @@ def do_train(
         torch.cuda.empty_cache()  # release cache
         torch.save({'state_dict': model.state_dict(), 'epoch': epoch, 'optimizer': optimizer.state_dict()},
                    os.path.join(output_dir, 'resume.pth.tar'))
+        print("model saved")
 
     logger.info("best mAP: {:.1%}".format(best_mAP))
     torch.save(model.state_dict(), os.path.join(output_dir, 'final.pth'))
@@ -100,7 +101,9 @@ def train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger):
     log_period = cfg.SOLVER.LOG_PERIOD
     data_start = time.time()
     # import ipdb; ipdb.set_trace()
+    count = 0
     for batch in tqdm.tqdm(train_loader):
+        count=count+1
         data_time.update(time.time() - data_start)
         input, target, _, _, _ = batch
         input = input.cuda()
@@ -134,6 +137,8 @@ def train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger):
             WRITER.add_scalar(f'Loss_Train_metric_loss',metric_loss.item(), ITER_LOG)
             WRITER.add_scalar(f'Loss_Train_totals',losses.val, ITER_LOG)
             ITER_LOG+=1
+            return
+
         data_start = time.time()
     end = time.time()
     logger.info("epoch takes {:.3f}s".format((end - start)))

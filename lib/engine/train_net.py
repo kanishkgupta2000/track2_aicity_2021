@@ -75,12 +75,13 @@ def do_train(
         torch.save(model.state_dict(), os.path.join(output_dir, 'test.pth'))
         print("successful save ")
         if epoch % cfg.SOLVER.EVAL_PERIOD == 0 or epoch == cfg.SOLVER.MAX_EPOCHS:
+            print("went into if condition")
             mAP, cmc = validate(model, dataset, val_loader, num_query, epoch, cfg, logger)
             ap_rank_1 = cmc[0]
             if mAP >= best_mAP:
                 best_mAP = mAP
                 torch.save(model.state_dict(), os.path.join(output_dir, 'best.pth'))
-        
+        print("going in scheduler step")
         scheduler.step()
         print("scheduler step done")
         torch.cuda.empty_cache()  # release cache

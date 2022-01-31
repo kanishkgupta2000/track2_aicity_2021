@@ -80,11 +80,14 @@ def do_train(
             if mAP >= best_mAP:
                 best_mAP = mAP
                 torch.save(model.state_dict(), os.path.join(output_dir, 'best.pth'))
-
+        
         scheduler.step()
+        print("scheduler step done")
         torch.cuda.empty_cache()  # release cache
+        print("cache released")
         torch.save({'state_dict': model.state_dict(), 'epoch': epoch, 'optimizer': optimizer.state_dict()},
                    os.path.join(output_dir, 'resume.pth.tar'))
+        print("resume done")
         print("model saved")
 
     logger.info("best mAP: {:.1%}".format(best_mAP))

@@ -71,7 +71,9 @@ def do_train(
                 logger.info("open all layers")
                 open_all_layers(model)
         train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger)
-        
+        print("out of the train function, now we save")
+        torch.save(model.state_dict(), os.path.join(output_dir, 'test.pth'))
+        print("successful save ")
         if epoch % cfg.SOLVER.EVAL_PERIOD == 0 or epoch == cfg.SOLVER.MAX_EPOCHS:
             mAP, cmc = validate(model, dataset, val_loader, num_query, epoch, cfg, logger)
             ap_rank_1 = cmc[0]
@@ -128,7 +130,8 @@ def train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger):
         model_time.update(time.time() - model_start)
         losses.update(to_python_float(loss.data), input.size(0))
 
-        if ITER % log_period == 0:
+        # if ITER % log_period == 0:
+        if ITER% 2 == 0:
             logger.info("Epoch[{}] Iteration[{}/{}] id_loss: {:.3f}, metric_loss: {:.5f}, total_loss: {:.3f}, data time: {:.3f}s, model time: {:.3f}s"
                         .format(epoch, ITER, len(train_loader),
                                 id_loss.item(), metric_loss.item(), losses.val, data_time.val, model_time.val))
@@ -137,6 +140,7 @@ def train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger):
             WRITER.add_scalar(f'Loss_Train_metric_loss',metric_loss.item(), ITER_LOG)
             WRITER.add_scalar(f'Loss_Train_totals',losses.val, ITER_LOG)
             ITER_LOG+=1
+            print("now time to save the model ")
             return
 
         data_start = time.time()

@@ -31,7 +31,7 @@ class AICity20_Split(BaseImageDataset):
 
         self.train_dir = osp.join(self.dataset_dir, 'image_train')
         self.query_dir = osp.join(self.dataset_dir, 'image_query')
-        self.gallery_dir = osp.join(self.dataset_dir, 'image_test')
+        self.gallery_dir = osp.join(self.dataset_dir, 'image_train')
         # self.train_aug_dir = osp.join(self.dataset_aug_dir, 'image_train')
 
         # self.list_train_path = osp.join(self.dataset_dir, 'name_train.txt')
@@ -39,7 +39,7 @@ class AICity20_Split(BaseImageDataset):
         # self.list_gallery_path = osp.join(self.dataset_dir, 'name_test.txt')
 
         self.train_label_path = osp.join(self.dataset_dir, 'train_label.xml')
-        self.test_label_path = osp.join(self.dataset_dir, 'test_label.xml')
+        self.test_label_path = osp.join(self.dataset_dir, 'train_label.xml')
         self.query_label_path = osp.join(self.dataset_dir, 'query_label.xml')
 
         self._check_before_run()

@@ -81,14 +81,11 @@ def do_train(
         #     if mAP >= best_mAP:
         #         best_mAP = mAP
         #         torch.save(model.state_dict(), os.path.join(output_dir, 'best.pth'))
-        print("going in scheduler step")
         scheduler.step()
         print("scheduler step done")
         torch.cuda.empty_cache()  # release cache
-        print("cache released")
         torch.save({'state_dict': model.state_dict(), 'epoch': epoch, 'optimizer': optimizer.state_dict()},
                    os.path.join(output_dir, 'resume.pth.tar'))
-        print("resume done")
         print("model saved")
 
     logger.info("best mAP: {:.1%}".format(best_mAP))
@@ -124,7 +121,6 @@ def train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger):
         if cfg.SOLVER.FP16:
             with amp.scale_loss(loss, optimizer) as scaled_loss:
                 scaled_loss.backward()
-                print("success")
         else:
             loss.backward()
         optimizer.step()
@@ -134,8 +130,7 @@ def train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger):
         model_time.update(time.time() - model_start)
         losses.update(to_python_float(loss.data), input.size(0))
 
-        # if ITER % log_period == 0:
-        if ITER% 2 == 0:
+        if ITER % log_period == 0:
             logger.info("Epoch[{}] Iteration[{}/{}] id_loss: {:.3f}, metric_loss: {:.5f}, total_loss: {:.3f}, data time: {:.3f}s, model time: {:.3f}s"
                         .format(epoch, ITER, len(train_loader),
                                 id_loss.item(), metric_loss.item(), losses.val, data_time.val, model_time.val))
@@ -144,8 +139,6 @@ def train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger):
             WRITER.add_scalar(f'Loss_Train_metric_loss',metric_loss.item(), ITER_LOG)
             WRITER.add_scalar(f'Loss_Train_totals',losses.val, ITER_LOG)
             ITER_LOG+=1
-            print("now time to save the model ")
-            return
 
         data_start = time.time()
     end = time.time()

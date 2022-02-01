@@ -46,6 +46,7 @@ MODEL:
   POOLING_METHOD: 'GeM'
   PRETRAIN_CHOICE: 'resume'
   PRETRAIN_PATH: 'pretrained_ckpts/resnext101_ibn_a.pth.tar'
+  PRETRAIN_RESUME_PATH: 'output/resume.pth.tar'
   TRIPLET_LOSS_WEIGHT: 1.0
 OUTPUT_DIR: 'output/'
 SOLVER:

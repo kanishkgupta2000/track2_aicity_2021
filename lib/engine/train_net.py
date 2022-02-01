@@ -121,10 +121,11 @@ def train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger):
         loss = id_loss + metric_loss
         print(loss)
         if cfg.SOLVER.FP16:
+            print("success")
+
             with amp.scale_loss(loss, optimizer) as scaled_loss:
                 scaled_loss.backward()
         else:
-            print("success")
             loss.backward()
         optimizer.step()
 

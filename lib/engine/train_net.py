@@ -70,6 +70,8 @@ def do_train(
             elif epoch == cfg.SOLVER.FREEZE_BASE_EPOCHS:
                 logger.info("open all layers")
                 open_all_layers(model)
+        torch.cuda.empty_cache()
+
         train(model, dataset, train_loader, optimizer, loss_fn, epoch, cfg, logger)
         # print("out of the train function, now we save")
         # torch.save(model.state_dict(), os.path.join(output_dir, 'test.pth'))

@@ -45,8 +45,6 @@ def train(cfg):
         start_epoch = 0
         last_epoch = -1
         model.load_param(cfg.MODEL.PRETRAIN_PATH, skip_fc=False)
-        torch.cuda.empty_cache()  # release cache
-
     elif cfg.MODEL.PRETRAIN_CHOICE == 'resume':
         checkpoint = torch.load(cfg.MODEL.PRETRAIN_RESUME_PATH, map_location='cuda')
         start_epoch = checkpoint['epoch']
@@ -57,6 +55,8 @@ def train(cfg):
         optimizer.load_state_dict(checkpoint['optimizer'])
         print('last epoch {}'.format(last_epoch))
         print('resume from {}'.format(cfg.MODEL.PRETRAIN_RESUME_PATH))
+        torch.cuda.empty_cache()  # release cache
+
     else:
         print('Only support pretrain_choice for imagenet and self, but got {}'.format(cfg.MODEL.PRETRAIN_CHOICE))
 

@@ -28,6 +28,8 @@ _C.MODEL.LAST_STRIDE = 1
 # Path to pretrained model of backbone
 _C.MODEL.PRETRAIN_PATH = '/home/cybercore/su/AICity2021-VOC-ReID/resnet50_ibn_a.pth.tar'
 # Use ImageNet pretrained model to initialize backbone or use self trained model to initialize the whole model
+
+_C.MODEL.PRETRAIN_RESUME_PATH='output/resume.pth.tar'
 # Options: 'imagenet' or 'self'
 _C.MODEL.PRETRAIN_CHOICE = ''
 # If train with BNNeck, options: 'bnneck' or 'no'

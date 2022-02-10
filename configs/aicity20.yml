@@ -100,5 +100,5 @@ TEST:
   TRACK_AUG: False
   TRACK_RERANK: False
   USE_VOC: False
-  WEIGHT: 'output/best.pth'
+  WEIGHT: 'output/final.pth'
   WRITE_RESULT: True

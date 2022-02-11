@@ -7,6 +7,7 @@ import logging
 import time
 import torch
 import torch.nn as nn
+import tqdm
 from lib.utils.reid_eval import evaluator
 
 def inference(
@@ -20,11 +21,13 @@ def inference(
     model.to(device)
     logger = logging.getLogger("reid_baseline.inference")
     logger.info("Enter inferencing")
+    print(f'num of query: {num_query}')
     metric = evaluator(num_query, dataset, cfg, max_rank=50)
+    print("model eval")
     model.eval()
     start = time.time()
     with torch.no_grad():
-        for batch in val_loader:
+        for batch in enumerate(tqdm.tqdm(val_loader)):
             data, pid, camid, img_path = batch
             data = data.cuda()
             feats = model(data)

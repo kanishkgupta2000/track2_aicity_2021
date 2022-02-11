@@ -5,7 +5,7 @@ DATALOADER:
 DATASETS:
   COMBINEALL: False
   ROOT_DIR: ''
-  TEST: ('aicity20_split',)
+  TEST: ('aicity20',)
   TRAIN: ('aicity20',)
 INPUT:
   AUGMIX_PROB: 0.25

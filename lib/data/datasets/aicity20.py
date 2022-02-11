@@ -21,7 +21,7 @@ class AICity20(BaseImageDataset):
   ----------------------------------------
 
     """
-    dataset_dir = 'AIC21_Track2_ReID'
+    dataset_dir = 'AIC21_Track2_ReID/AIC21_Track2_ReID'
     dataset_aug_dir = 'AIC20_ReID_Cropped'
     def __init__(self, root='', verbose=True, **kwargs):
         super(AICity20, self).__init__()

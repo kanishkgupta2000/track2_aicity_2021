@@ -56,7 +56,6 @@ def train(cfg):
         print('last epoch {}'.format(last_epoch))
         print('resume from {}'.format(cfg.MODEL.PRETRAIN_RESUME_PATH))
         torch.cuda.empty_cache()  # release cache
-
     else:
         print('Only support pretrain_choice for imagenet and self, but got {}'.format(cfg.MODEL.PRETRAIN_CHOICE))
 

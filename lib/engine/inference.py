@@ -27,7 +27,7 @@ def inference(
     model.eval()
     start = time.time()
     with torch.no_grad():
-        for batch in enumerate(tqdm.tqdm(val_loader)):
+        for _,batch in enumerate(tqdm.tqdm(val_loader)):
             data, pid, camid, img_path = batch
             data = data.cuda()
             feats = model(data)

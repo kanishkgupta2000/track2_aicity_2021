@@ -105,6 +105,7 @@ def re_ranking(probFea, galFea, k1, k2, lambda_value, local_distmat=None, only_l
     gallery_num = original_dist.shape[0]
     original_dist = np.transpose(original_dist / np.max(original_dist, axis=0))
     print("done 4")
+    print(original_dist.shape)
     V = np.zeros_like(original_dist).astype(np.float16)
     print("done 5")
     initial_rank = np.argsort(original_dist).astype(np.int32)

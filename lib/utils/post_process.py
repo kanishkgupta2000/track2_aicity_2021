@@ -107,8 +107,10 @@ def re_ranking(probFea, galFea, k1, k2, lambda_value, local_distmat=None, only_l
     print("done 4")
     print(original_dist.shape)
     # V = np.zeros_like(original_dist).astype(np.float16)
-    V = np.zeros(original_dist.shape ).astype(np.float16)
-
+    try:
+        V = np.zeros((32341,32341)).astype(np.float16)
+    except:
+        print("issue")
     print(V.shape)
     print("done 5")
     initial_rank = np.argsort(original_dist).astype(np.int32)

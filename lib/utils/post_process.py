@@ -80,11 +80,14 @@ def re_ranking(probFea, galFea, k1, k2, lambda_value, local_distmat=None, only_l
         original_dist = local_distmat
     else:
         # import ipdb; ipdb.set_trace()
+        
         feat = torch.cat([probFea,galFea])
         print('using GPU to compute original distance')
         distmat = torch.pow(feat,2).sum(dim=1, keepdim=True).expand(all_num,all_num) + \
                       torch.pow(feat, 2).sum(dim=1, keepdim=True).expand(all_num, all_num).t()
+        print("done 1")
         distmat.addmm_(1,-2,feat,feat.t())
+        print("done 2")
         # distmat=distmat.addmm(feat, feat.t(), beta=1, alpha=-2)
         
         original_dist = distmat.cpu().numpy()

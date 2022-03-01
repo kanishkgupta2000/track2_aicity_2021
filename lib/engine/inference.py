@@ -8,7 +8,10 @@ import time
 import torch
 import torch.nn as nn
 import tqdm
+import pickle
 from lib.utils.reid_eval import evaluator
+from os.path import exists
+
 
 def inference(
         cfg,
@@ -18,27 +21,37 @@ def inference(
         dataset
 ):
     device = cfg.MODEL.DEVICE
-    model.to(device)
-    logger = logging.getLogger("reid_baseline.inference")
-    logger.info("Enter inferencing")
-    print(f'num of query: {num_query}')
-    metric = evaluator(num_query, dataset, cfg, max_rank=50)
-    print("model eval")
-    model.eval()
-    start = time.time()
-    with torch.no_grad():
-        for _,batch in enumerate(tqdm.tqdm(val_loader)):
-            data, pid, camid, img_path = batch
-            data = data.cuda()
-            feats = model(data)
-            if cfg.TEST.FLIP_TEST:
-                data_flip = data.flip(dims=[3])  # NCHW
-                feats_flip = model(data_flip)
-                feats = (feats + feats_flip) / 2
-            output = [feats, pid, camid, img_path]
-            metric.update(output)
-    end = time.time()
-    logger.info("inference takes {:.3f}s".format((end - start)))
+
+    
+    if exists('inferences.txt'):
+        print("inferences file already exists, loading metric")
+        infile=open('inferences.txt','rb')
+        metric=pickle.load(infile)
+        infile.close()
+    else:
+        model.to(device)
+        logger = logging.getLogger("reid_baseline.inference")
+        logger.info("Enter inferencing")
+        print(f'num of query: {num_query}')
+        metric = evaluator(num_query, dataset, cfg, max_rank=50)
+        print("model eval")
+        model.eval()
+        start = time.time()  
+        with torch.no_grad():
+            for _,batch in enumerate(tqdm.tqdm(val_loader)):
+                data, pid, camid, img_path = batch
+                data = data.cuda()
+                feats = model(data)
+                if cfg.TEST.FLIP_TEST:
+                    data_flip = data.flip(dims=[3])  # NCHW
+                    feats_flip = model(data_flip)
+                    feats = (feats + feats_flip) / 2
+                output = [feats, pid, camid, img_path]
+                metric.update(output)
+        end = time.time()
+        with open('inferences.txt', 'wb') as fh:
+            pickle.dump(metric, fh)
+        logger.info("inference takes {:.3f}s".format((end - start)))
     torch.cuda.empty_cache()
     cmc, mAP, indices_np = metric.compute()
     logger.info('Validation Results')

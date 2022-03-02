@@ -112,12 +112,12 @@ class evaluator(object):
         
         # run a loop over the qf, get different aggregations
         count=0
-        for i in range(0, 1104,30):
+        for i in range(0, 1104,10):
             # for qfs, num.query changed to i+100
             count=count+1
-            qf = feats[i:min(i+30,1103)]
-            q_pids = np.asarray(self.pids[i:min(i+30,1103)])
-            q_camids = np.asarray(self.camids[i:min(i+30,1103)])
+            qf = feats[i:min(i+10,1103)]
+            q_pids = np.asarray(self.pids[i:min(i+10,1103)])
+            q_camids = np.asarray(self.camids[i:min(i+10,1103)])
             # gallery
             gf = feats[self.num_query:]
             g_pids = np.asarray(self.pids[self.num_query:])

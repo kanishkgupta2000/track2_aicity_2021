@@ -54,6 +54,13 @@ def inference(
         logger.info("inference takes {:.3f}s".format((end - start)))
     torch.cuda.empty_cache()
     cmc, mAP, indices_np = metric.compute()
+    #either generate 10 new evals from the eval object,
+    # OR run new inferences to make 10 new objects
+    #result is getting 10 obs,
+    #run compute
+    #get 10-11 results
+    #agregate
+    
     logger.info('Validation Results')
     logger.info("mAP: {:.1%}".format(mAP))
     for r in [1, 5, 10]:

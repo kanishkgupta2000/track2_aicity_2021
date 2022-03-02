@@ -89,7 +89,7 @@ TEST:
   ATTRIBUTES_RERANK: False
   CAM_DIST_PATH: 'dists_test/cam_feat_distmat.npy'
   DO_DBA: False
-  DO_RERANK: True
+  DO_RERANK: False
   FEAT_NORM: 'yes'
   FLIP_TEST: False
   IMS_PER_BATCH: 32

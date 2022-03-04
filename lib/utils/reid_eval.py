@@ -164,6 +164,7 @@ class evaluator(object):
 
             indices_np = np.argsort(distmat_np, axis=1)
             if self.cfg.TEST.TRACK_RERANK and len(self.dataset.test_tracks) > 0:
+                print("ran this")
                 rerank_indice_by_track(indices_np, self.img_paths[self.num_query:], self.dataset.test_tracks)
 
             cmc, mAP = eval_func(indices_np, q_pids, g_pids, q_camids, g_camids)

@@ -18,7 +18,8 @@ def inference(
         model,
         val_loader,
         num_query,
-        dataset
+        dataset,
+        run_batch
 ):
     device = cfg.MODEL.DEVICE
     logger = logging.getLogger("reid_baseline.inference")
@@ -53,7 +54,7 @@ def inference(
             pickle.dump(metric, fh)
         logger.info("inference takes {:.3f}s".format((end - start)))
     torch.cuda.empty_cache()
-    cmc, mAP, indices_np = metric.compute()
+    cmc, mAP, indices_np = metric.compute(run_batch)
     #either generate 10 new evals from the eval object,
     # OR run new inferences to make 10 new objects
     #result is getting 10 obs,

@@ -25,6 +25,9 @@ def main():
     parser.add_argument(
         "--config_file", default="./configs/debug.yml", help="path to config file", type=str
     )
+    parser.add_argument(
+        "--run_batch", default="no", help="run query in batches or not", type=str
+    )
     parser.add_argument("opts", help="Modify config options using the command-line", default=None,
                         nargs=argparse.REMAINDER)
 
@@ -34,6 +37,10 @@ def main():
 
     if args.config_file != "":
         cfg.merge_from_file(args.config_file)
+    if args.run_batch =="yes":
+        run_batch=True
+    else:
+        run_batch=False
     cfg.merge_from_list(args.opts)
     cfg.freeze()
 
@@ -60,7 +67,7 @@ def main():
     model = build_model(cfg, num_classes)
     model.load_param(cfg.TEST.WEIGHT)
 
-    inference(cfg, model, val_loader, num_query, dataset)
+    inference(cfg, model, val_loader, num_query, dataset,run_batch)
 
 
 if __name__ == '__main__':

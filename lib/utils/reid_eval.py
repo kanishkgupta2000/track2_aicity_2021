@@ -106,6 +106,8 @@ class evaluator(object):
         if self.do_DBA:
             feats = database_aug(feats, top_k=6)        
         if run_batch:
+            ans=[]
+            print("query batches running")
             count=0
             for i in range(0, 1104,100):
                 # for qfs, num.query changed to i+100
@@ -172,6 +174,7 @@ class evaluator(object):
                 ans.append([cmc, mAP, indices_np])
             return ans[0][0],ans[0][1],ans[0][2]
         else:
+            print("full query run")
             qf = feats[:self.num_query]
             q_pids = np.asarray(self.pids[:self.num_query])
             q_camids = np.asarray(self.camids[:self.num_query])

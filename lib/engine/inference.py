@@ -21,6 +21,7 @@ def inference(
         dataset
 ):
     device = cfg.MODEL.DEVICE
+    logger = logging.getLogger("reid_baseline.inference")
 
     
     if exists('inferences.txt'):
@@ -30,7 +31,6 @@ def inference(
         infile.close()
     else:
         model.to(device)
-        logger = logging.getLogger("reid_baseline.inference")
         logger.info("Enter inferencing")
         print(f'num of query: {num_query}')
         metric = evaluator(num_query, dataset, cfg, max_rank=50)

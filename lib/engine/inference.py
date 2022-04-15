@@ -31,6 +31,7 @@ def inference(
         print("inferences file already exists, loading metric")
         infile=open('inferences.txt','rb')
         metric=pickle.load(infile)
+        metric.do_rerank=False
         infile.close()
     else:
         model.to(device)

@@ -105,7 +105,8 @@ class evaluator(object):
             feats = torch.nn.functional.normalize(feats, dim=1, p=2)
         if self.do_DBA:
             feats = database_aug(feats, top_k=6)        
-        print("rerank:"+self.do_rerank)
+        print("rerank")
+        print(self.do_rerank)
         if run_batch:
             ans=[]
             print("query batches running")

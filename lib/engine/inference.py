@@ -21,6 +21,8 @@ def inference(
         dataset,
         run_batch
 ):
+    print("cfg rerank ")
+    print(cfg.TEST.DO_RERANK)
     device = cfg.MODEL.DEVICE
     logger = logging.getLogger("reid_baseline.inference")
 

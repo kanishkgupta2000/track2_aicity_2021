@@ -21,17 +21,16 @@ def inference(
         dataset,
         run_batch
 ):
-    print("cfg rerank ")
-    print(cfg.TEST.DO_RERANK)
+
     device = cfg.MODEL.DEVICE
     logger = logging.getLogger("reid_baseline.inference")
 
-    
-    if exists('inferences.txt'):
+    inference_file='inferences_'+cfg.DATASETS.TEST[0]+'.txt'
+    if exists(inference_file):
         print("inferences file already exists, loading metric")
-        infile=open('inferences.txt','rb')
+        infile=open(inference_file,'rb')
         metric=pickle.load(infile)
-        metric.do_rerank=False
+        metric.do_rerank=cfg.TEST.DO_RERANK
         infile.close()
     else:
         model.to(device)
@@ -53,7 +52,7 @@ def inference(
                 output = [feats, pid, camid, img_path]
                 metric.update(output)
         end = time.time()
-        with open('inferences.txt', 'wb') as fh:
+        with open(inference_file, 'wb') as fh:
             pickle.dump(metric, fh)
         logger.info("inference takes {:.3f}s".format((end - start)))
     torch.cuda.empty_cache()

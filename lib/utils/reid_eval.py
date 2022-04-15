@@ -82,8 +82,6 @@ class evaluator(object):
         self.query_expansion_topk = 6
         self.do_DBA = cfg.TEST.DO_DBA
         self.dataset = dataset
-        print("cfg rerank ")
-        print(cfg.TEST.DO_RERANK)
         self.do_rerank = cfg.TEST.DO_RERANK
         self.rerank_param = cfg.TEST.RERANK_PARAM
         self.cfg = cfg
@@ -107,8 +105,6 @@ class evaluator(object):
             feats = torch.nn.functional.normalize(feats, dim=1, p=2)
         if self.do_DBA:
             feats = database_aug(feats, top_k=6)        
-        print("rerank")
-        print(self.do_rerank)
         if run_batch:
             ans=[]
             print("query batches running")

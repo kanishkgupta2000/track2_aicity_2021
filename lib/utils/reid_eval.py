@@ -82,6 +82,8 @@ class evaluator(object):
         self.query_expansion_topk = 6
         self.do_DBA = cfg.TEST.DO_DBA
         self.dataset = dataset
+        print("cfg rerank ")
+        print(cfg.TEST.DO_RERANK)
         self.do_rerank = cfg.TEST.DO_RERANK
         self.rerank_param = cfg.TEST.RERANK_PARAM
         self.cfg = cfg

@@ -136,18 +136,19 @@ class evaluator(object):
                     cam_dist = None
                     ori_dist = None
 
-                # if self.do_rerank:
-                #     distmat_np = re_ranking(qf, gf,
-                #                             k1=self.rerank_param[0],
-                #                             k2=self.rerank_param[1],
-                #                             lambda_value=self.rerank_param[2], USE_VOC=self.cfg.TEST.USE_VOC, cam_dist=cam_dist, ori_dist=ori_dist)
-                # else:
-                #     distmat, indices = comput_distmat(qf, gf)
-                #     distmat_np = distmat.cpu().numpy()
+                if self.do_rerank==True:
+                    print("rerank run ")
+                    distmat_np = re_ranking(qf, gf,
+                                            k1=self.rerank_param[0],
+                                            k2=self.rerank_param[1],
+                                            lambda_value=self.rerank_param[2], USE_VOC=self.cfg.TEST.USE_VOC, cam_dist=cam_dist, ori_dist=ori_dist)
+                else:
+                    print("rerank not run")
+                    distmat, indices = comput_distmat(qf, gf)
+                    distmat_np = distmat.cpu().numpy()
                     
                     
-                distmat, indices = comput_distmat(qf, gf)
-                distmat_np = distmat.cpu().numpy()
+
                 # track_idxs = generate_track_idxs(g_names, self.dataset.test_tracks)
                 # distmat_track_np = generate_track_distmat(distmat_np, track_idxs)
                 # np.save(os.path.dirname(self.cfg.TEST.WEIGHT) + '/distmat_track',

@@ -199,12 +199,14 @@ class evaluator(object):
             else:
                 cam_dist = None
                 ori_dist = None
-            if self.do_rerank:
+            if self.do_rerank==True:
+                print("reranking done")
                 distmat_np = re_ranking(qf, gf,
                                         k1=self.rerank_param[0],
                                         k2=self.rerank_param[1],
                                         lambda_value=self.rerank_param[2], USE_VOC=self.cfg.TEST.USE_VOC, cam_dist=cam_dist, ori_dist=ori_dist)
             else:
+                print("reranking not done")
                 distmat, indices = comput_distmat(qf, gf)
                 distmat_np = distmat.cpu().numpy()
 
